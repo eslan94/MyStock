@@ -1,9 +1,9 @@
 import React from 'react'
 import { Image, Modal, StyleSheet, Text, View, useWindowDimensions } from 'react-native'
-import { Product, StackNavigator } from '../../navigator/StackNavigator';
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../../commons/constantsColor';
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import { Product } from '../../../navigator/StackNavigator';
 
 interface Props{
     product: Product;
@@ -21,7 +21,7 @@ export const ModalProduct = ({product, isVisible, changeVisible}:Props) => {
             <View style={{width: width*0.80,
                 ...styles.content}}>
                 <View style={styles.headerModal}>
-                    <Text style={styles.title}>{product.name}</Text>
+                    <Text style={styles.title}>{product.productname}</Text>
                     <View style={styles.iconClose}>
                         <Icon name={'cancel'} size={20} color={PRIMARY_COLOR} onPress={changeVisible}/>
                     </View>

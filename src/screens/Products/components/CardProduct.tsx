@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
-import { Product } from '../ProductsScreen'
 import { TouchableOpacity } from 'react-native'
 import  Icon  from 'react-native-vector-icons/MaterialIcons'
 import { ModalProduct } from './ModalProduct'
+import { Product } from '../../../navigator/StackNavigator'
 
 interface Props{
     product: Product
@@ -23,7 +23,7 @@ export const CardProduct = ({product}:Props) => {
                     source={{uri: product.pathImage}}
                     style={styles.image}/>
                 <View>
-                        <Text style={styles.title}>{product.name}</Text>
+                        <Text style={styles.title}>{product.productname}</Text>
                         <Text>Precio: ${product.price.toFixed(2)}</Text>
                 </View>
                     

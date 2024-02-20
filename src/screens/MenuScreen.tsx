@@ -11,7 +11,7 @@ export const MenuScreen = ({navigation}:any) => {
         </View>
         <View>
             <Image style={styles.logo} source={require('../images/LogoClientes.png')} />
-            <LinkComponent title='Clientes' onPress={()=>navigation.navigate('SuppliersScreen')}/>
+            <LinkComponent title='Clientes' onPress={()=>navigation.navigate('CustomersScreen')}/>
         </View>
         <View>
             <Image style={styles.logo} source={require('../images/LogoProveedor.png')}/>

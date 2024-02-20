@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { ImageComponent, StatusBar, StyleSheet, Text, View } from 'react-native'
-import { TitleComponent } from '../components/TitleComponent'
-import { BUTTON_COLOR, ERROR_COLOR, PRIMARY_COLOR } from '../commons/constantsColor';
-import { BodyComponent } from '../components/BodyComponent'
-import { InputComponent } from '../components/InputComponent'
-import { ButtonComponent } from '../components/ButtonComponent'
+import { TitleComponent } from '../../components/TitleComponent'
+import { BUTTON_COLOR, ERROR_COLOR, PRIMARY_COLOR } from '../../commons/constantsColor';
+import { BodyComponent } from '../../components/BodyComponent'
+import { InputComponent } from '../../components/InputComponent'
+import { ButtonComponent } from '../../components/ButtonComponent'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Snackbar from 'react-native-snackbar';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Product } from '../navigator/StackNavigator';
+import { Product } from '../../navigator/StackNavigator';
 import { useNavigation } from '@react-navigation/native';
-import { hasErrorForm } from '../commons/authValidation';
+import { getIdNewProduct, hasErrorForm, hasErrorFormProduct, showSnackBar, verifyExistProduct } from '../../commons/authValidation';
 
 export interface ProductForm{
     productname: string;
@@ -47,8 +47,8 @@ export const RegisterProductScreen = ({productsStock, setProductsStock}:RegProdu
     }
 
     
-    const handlerSaveInfo=()=>{
-        if(hasErrorForm(form)){
+    const handlerSaveProduct=()=>{
+        if(hasErrorFormProduct(form)){
             setForm(prevState=>({
                 ...prevState,
                 hasError:true
@@ -61,6 +61,21 @@ export const RegisterProductScreen = ({productsStock, setProductsStock}:RegProdu
             hasError:false
             
         }))
+
+        const existProduct=verifyExistProduct(productsStock, form)
+        if(existProduct){
+            showSnackBar('Producto ya registrado', ERROR_COLOR)
+            return;
+        }
+
+        const newProduct:Product={
+            id: getIdNewProduct(productsStock),
+            ...form
+        }
+
+        setProductsStock(newProduct)
+        showSnackBar('Producto Agregado','green')
+        navigation.goBack();
         
 
         
@@ -72,26 +87,15 @@ export const RegisterProductScreen = ({productsStock, setProductsStock}:RegProdu
   return (
     <View>
         <StatusBar backgroundColor={PRIMARY_COLOR}/>
-        <TitleComponent title='Iniciar Sesión'/>
+        <TitleComponent title='Agregar nuevo producto'/>
         <BodyComponent>
-            <Text style={styles.textWelcome}>Bienvenido de nuevo!</Text>
-            <Text style={styles.textDescription}>Ingresa tus credenciales para continuar</Text>
             <View style={styles.containerForm}>
-            <InputComponent placeholder='Usuario' name='username' onChangeText={handlerChangeText} hasError={form.hasError}/>
-                <InputComponent 
-                    placeholder='Contraseña' 
-                    name='password' 
-                    onChangeText={handlerChangeText}
-                    isPassword={hiddenPassword}
-                    hasICon={true}
-                    actionIcon={()=>sethiddenPassword(!hiddenPassword)}
-                    hasError={form.hasError}/>
-                
+            <InputComponent placeholder='Producto' name='productname' onChangeText={handlerChangeText} hasError={form.hasError}/>
+            <InputComponent placeholder='Precio' name='price' onChangeText={handlerChangeText} hasError={form.hasError}/>
+            <InputComponent placeholder='Cantidad' name='stock' onChangeText={handlerChangeText} hasError={form.hasError}/>
+            <InputComponent placeholder='URL Imagen' name='pathImage' onChangeText={handlerChangeText} hasError={form.hasError}/>
             </View>  
-            <ButtonComponent title='Iniciar Sesión' onPress={()=>navigation.navigate('MenuScreen')} />   
-            <TouchableOpacity>
-                <Text style={styles.textRegister}>No tienes cuenta? Regístrate aquí</Text>
-            </TouchableOpacity>
+            <ButtonComponent title='Registrar' onPress={handlerSaveProduct} />
 
         </BodyComponent>
     </View>

@@ -2,7 +2,7 @@ import Snackbar from "react-native-snackbar";
 import { Product, User } from "../navigator/StackNavigator";
 import { UserForm } from '../screens/LoginScreen';
 import { ERROR_COLOR } from "./constantsColor";
-import { ProductForm } from "../screens/RegisterProductScreen";
+import { ProductForm } from "../screens/Products/RegisterProductScreen";
 
 export const hasErrorForm=(form: UserForm)=>{
     return form.username == '' ||form.password==''
@@ -33,4 +33,8 @@ export const hasErrorFormProduct=(form: ProductForm)=>{
 export const getIdNewProduct=(products: Product[])=>{
     const getIdProduct=products.map(product=>product.id)
     return Math.max(...getIdProduct)+1;
+}
+
+export const verifyExistProduct=(products: Product[], form: ProductForm)=>{
+    return products.filter(product=>product.productname==form.productname)[0];
 }
