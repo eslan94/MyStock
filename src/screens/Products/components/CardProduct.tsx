@@ -12,7 +12,9 @@ interface Props{
 export const CardProduct = ({product}:Props) => {
 
     const [showModal, setShowModa] = useState(false)
-
+    const Prueba=()=>{
+        {console.log(product.price)}
+    }
   return (
         
     <View>
@@ -23,8 +25,9 @@ export const CardProduct = ({product}:Props) => {
                     source={{uri: product.pathImage}}
                     style={styles.image}/>
                 <View>
-                        <Text style={styles.title}>{product.productname}</Text>
-                        <Text>Precio: ${product.price.toFixed(2)}</Text>
+                        <Text style={styles.title} onPress={Prueba}>{product.productname}</Text>
+                        
+                        <Text>Precio: ${product.price}</Text>
                 </View>
                     
             </View>

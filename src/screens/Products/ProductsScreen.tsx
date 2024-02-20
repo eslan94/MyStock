@@ -65,7 +65,7 @@ const styles=StyleSheet.create({
         marginBottom:15,
         position:'absolute',
         right:10,  
-        bottom:1 
+        bottom:10 
     },
     btnText:{
         textAlign:'center',
